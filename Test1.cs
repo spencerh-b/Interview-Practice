@@ -18,7 +18,7 @@ public static class Program{
         L2.AddLast(9);
         L2.AddLast(2);
 
-        foreach (var item in sumLists(L1,L2))
+        foreach (var item in sumListsFirst(L1,L2))
         {
             Console.Write(item + "->");
         }
@@ -118,18 +118,16 @@ public static class Program{
 
     private static string StrCompression(string oldStr){
         string newStr = "";
-        int count = 1;
-        for (int index = 0; index < oldStr.Length - 1; index++)
+        int count = 0;
+        for (int index = 0; index < oldStr.Length; index++)
         {
-            if(oldStr[index] == oldStr[index+1]){
-                count++;
-            }
-            else{
+            count++;
+            
+            if(index == oldStr.Length - 1 || oldStr[index] != oldStr[index + 1]){
                 newStr += oldStr[index].ToString() + count.ToString();
-                count = 1;
+                count = 0;
             }
         }
-        newStr += oldStr[oldStr.Length-1].ToString() + count.ToString();
         if (newStr.Length > oldStr.Length)
         {
             newStr = oldStr;
@@ -137,26 +135,27 @@ public static class Program{
         return newStr;
     }
    
-    private static LinkedList<int> sumLists(LinkedList<int> L1, LinkedList<int> L2){
-        int L1Value = Int32.Parse(AddList(L1.First));
-        int L2Value = Int32.Parse(AddList(L2.First));
+    private static LinkedList<int> sumListsFirst(LinkedList<int> L1, LinkedList<int> L2){
+        int L1Value = Int32.Parse(AddListFirst(L1.First));
+        int L2Value = Int32.Parse(AddListFirst(L2.First));
         string newValue = (L1Value + L2Value).ToString();
         LinkedList<int> newList = new LinkedList<int>();
         foreach(char digit in newValue){
-            newList.AddLast(Int32.Parse(digit.ToString()));
+            newList.AddFirst(Int32.Parse(digit.ToString()));
         }
         return newList;
     }
 
-    private static string AddList(LinkedListNode<int> pCur){
+    private static string AddListFirst(LinkedListNode<int> pCur){
         if(pCur != null){
-            return AddList(pCur.Next) + pCur.Value;
+            return AddListFirst(pCur.Next) + pCur.Value;
         }
         return "";
     }
 
+
     private static Stack<int> SortStack(Stack<int> unsortedStack){
-        Stack<int> tempStack = new Stack<int> ();
+        Stack<int> tempStack = new Stack<int>();
         tempStack.Push(unsortedStack.Pop());
         int tempNode;
         while(unsortedStack.Count > 0){
