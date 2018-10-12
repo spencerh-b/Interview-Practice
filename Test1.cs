@@ -3,108 +3,10 @@ using System.Collections.Generic;
 
 public static class Program{
     public static void Main(){
-        string newStr = URLify("Mr John Smith",13);
-        string compression = StrCompression("aabcccccaaas");
-        Console.WriteLine(newStr);
-        Console.WriteLine(compression);
 
-        LinkedList<int> L1 = new LinkedList<int>();
-        L1.AddLast(7);
-        L1.AddLast(1);
-        L1.AddLast(6);
-
-        LinkedList<int> L2 = new LinkedList<int>();
-        L2.AddLast(5);
-        L2.AddLast(9);
-        L2.AddLast(2);
-
-        foreach (var item in sumListsFirst(L1,L2))
-        {
-            Console.Write(item + "->");
-        }
-        Console.WriteLine("null");
-
-        Stack<int> myStack = new Stack<int>();
-        myStack.Push(6);
-        myStack.Push(3);
-        myStack.Push(9);
-        myStack.Push(14);
-        myStack.Push(-2);
-        myStack.Push(5);
-        myStack.Push(10);
-
-        myStack = SortStack(myStack);
-
-        foreach(var node in myStack){
-            Console.WriteLine(node);
-        }
-
-        BSTree myBST = new BSTree();
-        myBST.Add(40);
-        myBST.Add(20);
-        myBST.Add(60);
-        myBST.Add(10);
-        myBST.Add(30);
-        myBST.Add(50);
-        myBST.Add(70);
-        myBST.Add(15);
-        myBST.Add(35);
-        myBST.Add(55);
-        myBST.Add(75);
-        myBST.Add(5);
-        myBST.Add(25);
-        myBST.Add(45);
-        myBST.Add(65);
-
-        List<List<TreeNode>> lists = TreeDepth(myBST);
-        Console.WriteLine("");
-
-        foreach(var level in lists){
-            foreach(var node in level){
-                Console.Write(node.Data + " ");
-            }
-            Console.WriteLine("");
-            Console.WriteLine("");
-        }
-
-        HashSet<int> mySet = new HashSet<int>();
-        
-        try
-        {
-            mySet.Add(5);
-            mySet.Add(5);
-
-            foreach(var node in mySet){
-                Console.WriteLine(node);
-            }
-        }
-        catch
-        {
-            Console.WriteLine("Welp... You done learned it.");
-        }
-
-        Dictionary<char,int> myDict = new Dictionary<char,int>();
-
-        try
-        {
-            ++myDict['a'];
-            Console.WriteLine("1");
-            ++myDict['b'];
-            Console.WriteLine("2");
-            ++myDict['a'];
-            Console.WriteLine("3");
-            ++myDict['c'];
-            Console.WriteLine("4");
-
-            foreach(var node in myDict){
-                Console.WriteLine(node.Key + "  " + node.Value);
-            }
-        }
-        catch
-        {
-            Console.WriteLine("Welp... You done learned it #2.");
-        }
     }
+
+    
 
     private static string URLify(string oldStr, int trueLength){
         string[] subStrings = oldStr.Split(' ');
@@ -199,6 +101,35 @@ public static class Program{
             }
         }
         return lists;
+    }
+
+    private static string testSubstring(string S, int K){
+        Queue<char> str = new Queue<char>();
+        foreach(char letter in S){
+            if(letter != ' '){
+                str.Enqueue(letter);
+            }
+        }
+        int remainder = str.Count % K;
+        string newStr = "";
+        for(int i = 0; i < remainder; i++){
+            newStr+= str.Dequeue().ToString();
+        }
+        if(newStr != ""){
+            newStr+= " ";
+        }
+        int count = 0;
+        foreach(var letter in str)
+        {
+            count++;
+            newStr += letter.ToString();
+            if (count == K)
+            {
+                newStr += " ";
+                count = 0;
+            }
+        }
+        return newStr;
     }
 }
 public class BSTree{
@@ -300,3 +231,108 @@ public class TreeNode{
         set{right = value;}
     }
 }
+
+/* string tsubstr = testSubstring("abc asdfha asdf asdfh",4);
+        Console.WriteLine(tsubstr);
+
+        string newStr = URLify("Mr John Smith",13);
+        string compression = StrCompression("aabcccccaaas");
+        Console.WriteLine(newStr);
+        Console.WriteLine(compression);
+
+        LinkedList<int> L1 = new LinkedList<int>();
+        L1.AddLast(7);
+        L1.AddLast(1);
+        L1.AddLast(6);
+
+        LinkedList<int> L2 = new LinkedList<int>();
+        L2.AddLast(5);
+        L2.AddLast(9);
+        L2.AddLast(2);
+
+        foreach (var item in sumListsFirst(L1,L2))
+        {
+            Console.Write(item + "->");
+        }
+        Console.WriteLine("null");
+
+        Stack<int> myStack = new Stack<int>();
+        myStack.Push(6);
+        myStack.Push(3);
+        myStack.Push(9);
+        myStack.Push(14);
+        myStack.Push(-2);
+        myStack.Push(5);
+        myStack.Push(10);
+
+        myStack = SortStack(myStack);
+
+        foreach(var node in myStack){
+            Console.WriteLine(node);
+        }
+
+        BSTree myBST = new BSTree();
+        myBST.Add(40);
+        myBST.Add(20);
+        myBST.Add(60);
+        myBST.Add(10);
+        myBST.Add(30);
+        myBST.Add(50);
+        myBST.Add(70);
+        myBST.Add(15);
+        myBST.Add(35);
+        myBST.Add(55);
+        myBST.Add(75);
+        myBST.Add(5);
+        myBST.Add(25);
+        myBST.Add(45);
+        myBST.Add(65);
+
+        List<List<TreeNode>> lists = TreeDepth(myBST);
+        Console.WriteLine("");
+
+        foreach(var level in lists){
+            foreach(var node in level){
+                Console.Write(node.Data + " ");
+            }
+            Console.WriteLine("");
+            Console.WriteLine("");
+        }
+
+        HashSet<int> mySet = new HashSet<int>();
+        
+        try
+        {
+            mySet.Add(5);
+            mySet.Add(5);
+
+            foreach(var node in mySet){
+                Console.WriteLine(node);
+            }
+        }
+        catch
+        {
+            Console.WriteLine("Welp... You done learned it.");
+        }
+
+        Dictionary<char,int> myDict = new Dictionary<char,int>();
+
+        try
+        {
+            ++myDict['a'];
+            Console.WriteLine("1");
+            ++myDict['b'];
+            Console.WriteLine("2");
+            ++myDict['a'];
+            Console.WriteLine("3");
+            ++myDict['c'];
+            Console.WriteLine("4");
+
+            foreach(var node in myDict){
+                Console.WriteLine(node.Key + "  " + node.Value);
+            }
+        }
+        catch
+        {
+            Console.WriteLine("Welp... You done learned it #2.");
+        } */
